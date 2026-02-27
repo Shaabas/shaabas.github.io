@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="profile-container project-container">
+        <div class="calculator-section">
+            <h2>Days Lived Calculator</h2>
+            <p>Enter your DOB</p>
+            <input type="date" id="dob-input">
+            <button onclick="calculateDays()">Calculate</button>
+            <div id="result" class="result-text"></div>
+        </div>
+        <div class="links">
+            <a href="index.html">Back to Home</a>
+        </div>
+    </div>
+    <script>
+        function calculateDays(){
+            const dobInput = document.getElementById('dob-input').value
+            if(!dobInput){
+                document.getElementById('result').innerText = "Please select a date"
+                return;
+            }
+            const dob = new Date(dobInput);
+            const today = new Date();
+
+            const diff = Math.abs(today - dob)
+
+            const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24))
+            document.getElementById('result').innerText = 'You have lived for ${diff.toLocalString()}'
+        }
+    </script>
+</body>
+</html>

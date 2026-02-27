@@ -1,0 +1,41 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(67, 133, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.profile-container{
+    background-color: rgb(255, 223, 39);
+    padding: 50px;
+    border-radius: 30px;
+    text-align: center;
+    outline-style: dashed;
+}
+.profile-image{
+    object-fit: cover;
+    object-position: 60%;
+    height: 250px;
+    width: 250px;
+    border-radius: 10%;
+    outline: auto;
+    outline-style: dashed;
+}
+.intro{
+    font-family: Papyrus;
+}
+.badges{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+.badge{
+    background: rgba(1, 183, 255, 0.616);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-size: 0 0.80rem;
+    font-weight: 600;
+}
