@@ -700,9 +700,59 @@
     }
 
     /* ==========================================================================
-       LOAD PROJECTS STORE
+       LOCAL-FIRST VERSION & RECONCILIATION GUARD
        ========================================================================== */
-    function loadProjectsData() {
+    function recordLocalMutation() {
+        try {
+            localStorage.setItem('shaabas_projects_pending_sync', 'true');
+            localStorage.setItem('shaabas_local_version', Date.now().toString());
+        } catch (e) {}
+    }
+
+    function shouldAcceptRemoteData(remoteData, localData) {
+        if (!Array.isArray(remoteData)) return false;
+        if (!Array.isArray(localData) || localData.length === 0) return true;
+
+        const localVersion = parseInt(localStorage.getItem('shaabas_local_version') || '0', 10);
+        const timeSinceMutation = Date.now() - localVersion;
+
+        // If no mutation within 4 minutes, remote is always authoritative
+        if (timeSinceMutation > 240000) {
+            localStorage.removeItem('shaabas_projects_pending_sync');
+            return true;
+        }
+
+        const isPending = localStorage.getItem('shaabas_projects_pending_sync') === 'true';
+        if (!isPending) return true;
+
+        // Check if remote data has caught up with all locally added/edited items
+        const remoteMap = new Map(remoteData.map(p => [p.id, p]));
+        for (const localItem of localData) {
+            const remoteItem = remoteMap.get(localItem.id);
+            if (!remoteItem) {
+                // Remote is missing a recently added project (GitHub Pages build in progress)
+                return false;
+            }
+            if (localItem.updatedAt && remoteItem.updatedAt && remoteItem.updatedAt < localItem.updatedAt) {
+                // Remote has an older revision of an edited project
+                return false;
+            }
+        }
+
+        // If local had a deletion, remote must have caught up (not have more items than local)
+        if (localData.length < remoteData.length) {
+            return false;
+        }
+
+        // Remote matches or is ahead of all local changes
+        localStorage.removeItem('shaabas_projects_pending_sync');
+        return true;
+    }
+
+    /* ==========================================================================
+       LOAD PROJECTS STORE (DUAL-TIER: DIRECT GITHUB API FOR AUTH, PAGES FOR PUBLIC)
+       ========================================================================== */
+    async function loadProjectsData() {
         currentProjects = [];
         try {
             const cached = localStorage.getItem('shaabas_projects_data');
@@ -716,23 +766,63 @@
 
         renderProjects(currentProjects);
 
-        // Fetch latest projects.json asynchronously with cache-busting to bypass browser/CDN 10-minute cache
-        fetch(`projects.json?_t=${Date.now()}`, {
-            cache: 'no-store',
-            headers: {
-                'Cache-Control': 'no-cache, no-store, must-revalidate',
-                'Pragma': 'no-cache'
-            }
-        })
-            .then(res => res.ok ? res.json() : null)
-            .then(data => {
-                if (Array.isArray(data)) {
-                    currentProjects = data;
-                    saveProjectsDataLocally(currentProjects);
-                    renderProjects(currentProjects);
+        const token = (localStorage.getItem('shaabas_github_pat') || '').trim();
+
+        // Tier 1: If authenticated session, query GitHub Contents API directly (0s build delay!)
+        if (AppState.isAuthenticated && token) {
+            try {
+                const apiUrl = 'https://api.github.com/repos/Shaabas/shaabas.github.io/contents/projects.json';
+                const res = await fetch(apiUrl, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+
+                if (res.ok) {
+                    const fileData = await res.json();
+                    if (fileData.content) {
+                        const contentStr = decodeURIComponent(escape(atob(fileData.content.replace(/\s/g, ''))));
+                        const apiData = JSON.parse(contentStr);
+                        if (Array.isArray(apiData)) {
+                            currentProjects = apiData;
+                            localStorage.removeItem('shaabas_projects_pending_sync');
+                            saveProjectsDataLocally(currentProjects);
+                            renderProjects(currentProjects);
+                            return;
+                        }
+                    }
                 }
-            })
-            .catch(() => {});
+            } catch (err) {
+                console.warn('Direct GitHub API fetch failed, falling back to static:', err);
+            }
+        }
+
+        // Tier 2: Public / fallback fetch from GitHub Pages with cache-busting & optimistic guard
+        try {
+            const res = await fetch(`projects.json?_t=${Date.now()}`, {
+                cache: 'no-store',
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache'
+                }
+            });
+
+            if (res.ok) {
+                const remoteData = await res.json();
+                if (Array.isArray(remoteData)) {
+                    if (shouldAcceptRemoteData(remoteData, currentProjects)) {
+                        currentProjects = remoteData;
+                        saveProjectsDataLocally(currentProjects);
+                        renderProjects(currentProjects);
+                    } else {
+                        console.info('Retaining local optimistic projects state while GitHub Pages build finishes.');
+                    }
+                }
+            }
+        } catch (err) {
+            console.warn('Projects fetch error:', err);
+        }
     }
 
     /* ==========================================================================
@@ -853,8 +943,10 @@
                         actionText: btnText,
                         iconGradient: gradient,
                         iconContent: emoji,
-                        iconEmoji: emoji
+                        iconEmoji: emoji,
+                        updatedAt: Date.now()
                     };
+                    recordLocalMutation();
                     saveProjectsDataLocally(currentProjects);
                     renderProjects(currentProjects);
                     syncProjectsToGitHub(currentProjects, `feat(projects): update ${title}`);
@@ -878,10 +970,12 @@
                     ratingStars: '★★★★★',
                     ratingNum: '(New)',
                     badge: 'New',
-                    badgeClass: 'app-tag-pill'
+                    badgeClass: 'app-tag-pill',
+                    updatedAt: Date.now()
                 };
 
                 currentProjects.unshift(newProject);
+                recordLocalMutation();
                 saveProjectsDataLocally(currentProjects);
                 renderProjects(currentProjects);
                 syncProjectsToGitHub(currentProjects, `feat(projects): add ${title}`);
@@ -952,6 +1046,7 @@
             }
 
             currentProjects = currentProjects.filter(p => p.id !== deletingProjectId);
+            recordLocalMutation();
             saveProjectsDataLocally(currentProjects);
 
             setTimeout(() => {
@@ -1030,6 +1125,8 @@
         if (clearBtn) {
             clearBtn.addEventListener('click', () => {
                 localStorage.removeItem('shaabas_github_pat');
+                localStorage.removeItem('shaabas_projects_pending_sync');
+                localStorage.removeItem('shaabas_local_version');
                 sound.playClick();
                 showToast('GitHub Personal Access Token cleared.');
                 closeModal();
@@ -1168,6 +1265,8 @@
         if (sessionClearTokenBtn) {
             sessionClearTokenBtn.addEventListener('click', () => {
                 localStorage.removeItem('shaabas_github_pat');
+                localStorage.removeItem('shaabas_projects_pending_sync');
+                localStorage.removeItem('shaabas_local_version');
                 sound.playClick();
                 showToast('GitHub Token cleared from browser.');
                 closeModal();
@@ -1197,6 +1296,7 @@
                 if (phrase === 'pd1703') {
                     sessionStorage.setItem('adw-auth', 'true');
                     updateSessionUI(true);
+                    loadProjectsData();
 
                     if (statusMsg) {
                         statusMsg.textContent = '✓ Access Granted';
