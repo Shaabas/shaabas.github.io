@@ -1,0 +1,1615 @@
+/* ==========================================================================
+   GTK4 & LIBADWAITA DESIGN SYSTEM (GNOME 47 WEB ENGINE)
+   Authored for Shabas T P — Full-Stack Web Developer & UI Craftsman
+   ========================================================================== */
+
+/* --- ROOT PALETTES & DESIGN TOKENS --- */
+:root {
+    /* Permanent Accent Color: GNOME 47 Teal */
+    --accent-color: #2190a4;
+    --accent-hover: #29a8bf;
+    --accent-active: #19788a;
+    --accent-fg: #ffffff;
+    
+    /* Semantic Colors */
+    --destructive-color: #e01b24;
+    --success-color: #2ec27e;
+    --warning-color: #e5a50a;
+
+    /* Geometry & Timing */
+    --window-radius: 12px;
+    --card-radius: 12px;
+    --button-radius: 8px;
+    --pill-radius: 9999px;
+    --ease-gnome: cubic-bezier(0.25, 1, 0.5, 1);
+    --transition-fast: 0.18s var(--ease-gnome);
+    --transition-normal: 0.25s var(--ease-gnome);
+    --transition-slow: 0.4s var(--ease-gnome);
+
+    /* Typography */
+    --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Cantarell', 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+    /* Desktop Wallpaper */
+    --desktop-bg: radial-gradient(circle at 50% 20%, #304060 0%, #1a2234 50%, #0d121c 100%);
+}
+
+/* --- THEME DEFINITIONS (ADWAITA DARK & LIGHT) --- */
+html[data-theme="dark"] {
+    --window-bg-color: #242424;
+    --window-fg-color: #ffffff;
+    --view-bg-color: #1e1e1e;
+    --view-fg-color: #ffffff;
+    --headerbar-bg-color: #303030;
+    --headerbar-fg-color: #ffffff;
+    --headerbar-border: rgba(0, 0, 0, 0.5);
+    
+    --card-bg-color: rgba(255, 255, 255, 0.07);
+    --card-hover-bg: rgba(255, 255, 255, 0.11);
+    --card-border-color: rgba(255, 255, 255, 0.08);
+    --card-fg-color: #ffffff;
+    
+    --button-bg-color: rgba(255, 255, 255, 0.1);
+    --button-hover-bg: rgba(255, 255, 255, 0.15);
+    --button-active-bg: rgba(255, 255, 255, 0.2);
+    --button-fg-color: #ffffff;
+
+    --entry-bg-color: rgba(0, 0, 0, 0.25);
+    --entry-border-color: rgba(255, 255, 255, 0.1);
+    --entry-focus-border: var(--accent-color);
+
+    --dim-label-color: rgba(255, 255, 255, 0.68);
+    --faint-label-color: rgba(255, 255, 255, 0.45);
+    
+    --popover-bg-color: #323232;
+    --popover-border: rgba(255, 255, 255, 0.12);
+    --popover-fg-color: #ffffff;
+
+    --window-shadow: none;
+    --desktop-bg: var(--window-bg-color);
+}
+
+html[data-theme="light"] {
+    --window-bg-color: #fafafa;
+    --window-fg-color: #242424;
+    --view-bg-color: #ffffff;
+    --view-fg-color: #242424;
+    --headerbar-bg-color: #ebebeb;
+    --headerbar-fg-color: #242424;
+    --headerbar-border: rgba(0, 0, 0, 0.12);
+    
+    --card-bg-color: #ffffff;
+    --card-hover-bg: rgba(0, 0, 0, 0.04);
+    --card-border-color: rgba(0, 0, 0, 0.09);
+    --card-fg-color: #242424;
+    
+    --button-bg-color: rgba(0, 0, 0, 0.06);
+    --button-hover-bg: rgba(0, 0, 0, 0.1);
+    --button-active-bg: rgba(0, 0, 0, 0.15);
+    --button-fg-color: #242424;
+
+    --entry-bg-color: #f0f0f0;
+    --entry-border-color: rgba(0, 0, 0, 0.12);
+    --entry-focus-border: var(--accent-color);
+
+    --dim-label-color: rgba(0, 0, 0, 0.62);
+    --faint-label-color: rgba(0, 0, 0, 0.42);
+    
+    --popover-bg-color: #ffffff;
+    --popover-border: rgba(0, 0, 0, 0.14);
+    --popover-fg-color: #242424;
+
+    --window-shadow: none;
+    --desktop-bg: var(--window-bg-color);
+}
+
+
+/* --- CSS RESET & BASE STYLES --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: var(--font-ui);
+    color: var(--window-fg-color);
+    background: var(--window-bg-color);
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: inherit;
+    transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+button:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+input, textarea {
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: inherit;
+    border: none;
+    outline: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ==========================================================================
+   DESKTOP WORKSPACE & ADW APPLICATION WINDOW (FULL-PAGE FILL)
+   ========================================================================== */
+.desktop-workspace {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    background: var(--window-bg-color);
+}
+
+/* AdwApplicationWindow */
+.adw-window {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    background: var(--window-bg-color);
+    color: var(--window-fg-color);
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+
+.adw-window.minimized {
+    transform: scale(0.6) translateY(200px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Header Bar (AdwHeaderBar) */
+.adw-header-bar {
+    height: 50px;
+    min-height: 50px;
+    background: var(--headerbar-bg-color);
+    color: var(--headerbar-fg-color);
+    border-bottom: 1px solid var(--headerbar-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0 16px;
+    user-select: none;
+    z-index: 10;
+}
+
+
+
+.headerbar-right {
+    position: absolute;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* View Switcher (AdwViewSwitcher) */
+.adw-view-switcher {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+@media (min-width: 769px) {
+    .adw-view-switcher {
+        background: rgba(0, 0, 0, 0.14);
+        border-radius: 10px;
+        padding: 3px;
+    }
+
+    html[data-theme="light"] .adw-view-switcher {
+        background: rgba(0, 0, 0, 0.06);
+    }
+}
+
+.view-switcher-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--dim-label-color);
+    transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.view-switcher-button:hover {
+    color: var(--window-fg-color);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="light"] .view-switcher-button:hover {
+    color: var(--window-fg-color);
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.view-switcher-button.active {
+    background: var(--card-bg-color);
+    color: var(--window-fg-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+}
+
+html[data-theme="light"] .view-switcher-button.active {
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tab-icon {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Window Controls (Libadwaita Close / Maximize / Minimize) */
+.window-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 8px;
+}
+
+.win-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: inherit;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+html[data-theme="light"] .win-btn {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.win-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.win-btn.win-close:hover {
+    background: var(--destructive-color);
+    color: #ffffff;
+}
+
+/* Adw Banner */
+.adw-banner {
+    background: var(--accent-color);
+    color: var(--accent-fg);
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    transition: all var(--transition-fast);
+}
+
+.adw-banner.dismissed {
+    display: none;
+}
+
+.banner-close-btn {
+    font-size: 1.2rem;
+    line-height: 1;
+    color: inherit;
+    opacity: 0.8;
+}
+
+.banner-close-btn:hover {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   VIEW STACK & CLAMP
+   ========================================================================== */
+.adw-view-stack {
+    flex: 1;
+    overflow-y: auto;
+    background: var(--view-bg-color);
+    position: relative;
+}
+
+/* Custom Scrollbar */
+.adw-view-stack::-webkit-scrollbar {
+    width: 8px;
+}
+
+.adw-view-stack::-webkit-scrollbar-thumb {
+    background: rgba(128, 128, 128, 0.3);
+    border-radius: 4px;
+}
+
+.adw-view-stack::-webkit-scrollbar-thumb:hover {
+    background: rgba(128, 128, 128, 0.5);
+}
+
+.view-page {
+    display: none;
+    padding: 32px 24px 64px 24px;
+    animation: fadeInPage 0.24s var(--ease-gnome) forwards;
+}
+
+.view-page.active {
+    display: block;
+}
+
+@keyframes fadeInPage {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.adw-clamp {
+    max-width: 840px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* ==========================================================================
+   LIBADWAITA STATUS PAGE & HERO (AdwStatusPage)
+   ========================================================================== */
+.adw-status-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 0 10px 0;
+}
+
+.avatar-ring-container {
+    position: relative;
+    width: 128px;
+    height: 128px;
+    margin-bottom: 18px;
+}
+
+.adw-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent-color);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.adw-avatar:hover {
+    transform: scale(1.04);
+}
+
+.avatar-status-dot {
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--success-color);
+    border: 3px solid var(--view-bg-color);
+}
+
+.status-page-title {
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+}
+
+.status-page-badge {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 12px;
+}
+
+.status-page-description {
+    max-width: 580px;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--dim-label-color);
+    margin-bottom: 22px;
+}
+
+.status-page-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* ==========================================================================
+   LIBADWAITA PREFERENCES GROUP & ACTION ROWS
+   ========================================================================== */
+.adw-preferences-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.group-header {
+    margin-left: 12px;
+    margin-bottom: 4px;
+}
+
+.group-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.group-description {
+    font-size: 0.82rem;
+    color: var(--dim-label-color);
+}
+
+.adw-card-group {
+    background: var(--card-bg-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+}
+
+.adw-action-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--card-border-color);
+    transition: background var(--transition-fast);
+}
+
+.adw-action-row:last-child {
+    border-bottom: none;
+}
+
+.adw-action-row.clickable-row {
+    cursor: pointer;
+}
+
+.adw-action-row.clickable-row:hover {
+    background: var(--card-hover-bg);
+}
+
+.row-icon-box {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.row-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.row-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.row-subtitle {
+    font-size: 0.82rem;
+    color: var(--dim-label-color);
+    line-height: 1.4;
+}
+
+.row-action-arrow {
+    font-size: 1.2rem;
+    color: var(--dim-label-color);
+    font-weight: 300;
+}
+
+/* Color Box Utilities */
+.accent-bg { background: rgba(33, 144, 164, 0.18); color: var(--accent-color); }
+.purple-bg { background: rgba(145, 65, 172, 0.18); color: #c061cb; }
+.green-bg { background: rgba(58, 148, 74, 0.18); color: #57e389; }
+.orange-bg { background: rgba(237, 91, 0, 0.18); color: #ffa348; }
+.blue-bg { background: rgba(53, 132, 228, 0.18); color: #62a0ea; }
+.dark-bg { background: rgba(0, 0, 0, 0.3); color: #ffffff; }
+
+/* Metrics Grid */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.metric-card {
+    background: var(--card-bg-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: var(--card-radius);
+    padding: 18px 14px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-color);
+}
+
+.metric-number {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    letter-spacing: -0.02em;
+}
+
+.metric-label {
+    font-size: 0.78rem;
+    color: var(--dim-label-color);
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+/* ==========================================================================
+   TAB 2: PROJECTS (GNOME SOFTWARE STYLE)
+   ========================================================================== */
+.software-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.software-filter-pills {
+    display: flex;
+    gap: 6px;
+}
+
+.filter-pill {
+    padding: 6px 14px;
+    border-radius: var(--pill-radius);
+    background: var(--card-bg-color);
+    border: 1px solid var(--card-border-color);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--dim-label-color);
+}
+
+.filter-pill:hover {
+    background: var(--card-hover-bg);
+    color: var(--window-fg-color);
+}
+
+.filter-pill.active {
+    background: var(--accent-color);
+    color: var(--accent-fg);
+    border-color: var(--accent-color);
+}
+
+.software-search-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    max-width: 440px;
+    justify-content: flex-end;
+}
+
+.software-search {
+    flex: 1;
+    min-width: 180px;
+    max-width: 300px;
+}
+
+
+
+.add-project-btn {
+    white-space: nowrap;
+    height: 36px;
+    padding: 0 14px;
+    border-radius: var(--button-radius, 8px);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.projects-software-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 16px;
+}
+
+.software-card {
+    background: var(--card-bg-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: var(--card-radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.software-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.software-card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    position: relative;
+}
+
+.software-icon-box {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.app-blue-gradient { background: linear-gradient(135deg, #3584e4, #1c71d8); }
+.app-parchment-gradient { background: linear-gradient(135deg, #c79c5e, #8c6738); }
+.app-gold-gradient { background: linear-gradient(135deg, #e5a50a, #c88800); }
+.app-cyan-gradient { background: linear-gradient(135deg, #00b4d8, #0077b6); }
+.app-green-gradient { background: linear-gradient(135deg, #2ec27e, #26a269); }
+.app-purple-gradient { background: linear-gradient(135deg, #9141ac, #613583); }
+.app-orange-gradient { background: linear-gradient(135deg, #ff7800, #e66100); }
+.app-dark-gradient { background: linear-gradient(135deg, #303030, #181818); }
+.app-teal-gradient { background: linear-gradient(135deg, #2190a4, #19788a); }
+
+.software-card-meta {
+    flex: 1;
+}
+
+.software-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.software-card-dev {
+    font-size: 0.78rem;
+    color: var(--dim-label-color);
+    margin-bottom: 4px;
+}
+
+.rating-stars {
+    font-size: 0.75rem;
+    color: #e5a50a;
+}
+
+.rating-num {
+    color: var(--dim-label-color);
+    margin-left: 2px;
+}
+
+.app-tag-pill {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: var(--pill-radius);
+    background: var(--button-bg-color);
+    color: var(--dim-label-color);
+}
+
+.app-tag-pill.featured-tag {
+    background: var(--accent-color);
+    color: var(--accent-fg);
+}
+
+.card-admin-actions {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+}
+
+.card-admin-actions .adw-icon-btn {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--button-bg-color);
+    color: var(--dim-label-color);
+    transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.card-admin-actions .adw-icon-btn:hover {
+    background: var(--button-hover-bg);
+    color: var(--window-fg-color);
+    transform: scale(1.08);
+}
+
+.card-admin-actions .card-delete-btn:hover {
+    background: rgba(192, 28, 40, 0.2);
+    color: var(--destructive-color);
+}
+
+.software-card.removing {
+    opacity: 0;
+    transform: scale(0.88);
+    transition: opacity 0.26s ease, transform 0.26s ease;
+}
+
+.software-card-desc {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--dim-label-color);
+}
+
+.software-tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tech-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    background: rgba(128, 128, 128, 0.14);
+    border-radius: 6px;
+    color: var(--window-fg-color);
+}
+
+.software-card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+/* ==========================================================================
+   TAB 3: SKILLS (SYSTEM MONITOR STYLE)
+   ========================================================================== */
+.system-resources-box {
+    background: var(--card-bg-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: var(--card-radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.resource-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.res-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.res-val {
+    color: var(--accent-color);
+    font-family: var(--font-mono);
+}
+
+.adw-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(128, 128, 128, 0.2);
+    border-radius: var(--pill-radius);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--accent-color);
+    border-radius: var(--pill-radius);
+    transition: width 0.8s var(--ease-gnome);
+}
+
+.skills-columns-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.skill-glyph-icon {
+    font-size: 1.3rem;
+}
+
+.benchmark-card {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.benchmark-info {
+    flex: 1;
+}
+
+.benchmark-title {
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.benchmark-sub {
+    font-size: 0.82rem;
+    color: var(--dim-label-color);
+}
+
+.benchmark-results {
+    display: flex;
+    gap: 14px;
+    font-size: 0.85rem;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.accent-text {
+    color: var(--accent-color);
+}
+
+/* ==========================================================================
+   TAB 4: CONTACT (GNOME GEARY STYLE)
+   ========================================================================== */
+.mini-status {
+    padding: 10px 0;
+}
+
+.contact-mail-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+.compose-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.adw-entry-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--card-border-color);
+}
+
+.adw-entry-row.textarea-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.entry-label {
+    width: 140px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--dim-label-color);
+}
+
+.entry-input {
+    flex: 1;
+    width: 100%;
+    background: transparent;
+    font-size: 0.95rem;
+    padding: 4px 0;
+}
+
+.entry-textarea {
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.5;
+}
+
+.form-actions-row {
+    padding: 14px 18px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+/* ==========================================================================
+   GENERIC LIBADWAITA BUTTONS & WIDGETS
+   ========================================================================== */
+.adw-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: var(--button-radius);
+    background: var(--button-bg-color);
+    color: var(--button-fg-color);
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.adw-btn:hover {
+    background: var(--button-hover-bg);
+}
+
+.adw-btn:active {
+    background: var(--button-active-bg);
+    transform: scale(0.98);
+}
+
+.adw-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border-radius: var(--pill-radius);
+    background: var(--button-bg-color);
+    color: var(--button-fg-color);
+    font-weight: 600;
+    font-size: 0.92rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.adw-pill-btn:hover {
+    background: var(--button-hover-bg);
+    transform: translateY(-1px);
+}
+
+.adw-suggested-action {
+    background: var(--accent-color);
+    color: var(--accent-fg);
+}
+
+.adw-suggested-action:hover {
+    background: var(--accent-hover);
+}
+
+.adw-suggested-action:active {
+    background: var(--accent-active);
+}
+
+.adw-flat-btn {
+    padding: 6px 12px;
+    border-radius: var(--button-radius);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--dim-label-color);
+}
+
+.adw-flat-btn:hover {
+    background: var(--button-bg-color);
+    color: var(--window-fg-color);
+}
+
+.adw-flat-btn.destructive-hover:hover {
+    background: var(--destructive-color);
+    color: #ffffff;
+}
+
+.mini-btn {
+    padding: 4px 8px;
+    font-size: 0.78rem;
+}
+
+.adw-icon-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--button-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+}
+
+.adw-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme="light"] .adw-icon-btn:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.adw-entry {
+    width: 100%;
+    padding: 8px 14px;
+    background: var(--entry-bg-color);
+    border: 1px solid var(--entry-border-color);
+    border-radius: var(--button-radius);
+    color: inherit;
+    font-size: 0.88rem;
+    transition: border-color var(--transition-fast);
+}
+
+.adw-entry:focus {
+    border-color: var(--entry-focus-border);
+}
+
+.adw-badge {
+    padding: 3px 8px;
+    border-radius: var(--pill-radius);
+    background: var(--button-bg-color);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--dim-label-color);
+}
+
+.adw-badge.success-badge {
+    background: rgba(46, 194, 126, 0.18);
+    color: var(--success-color);
+}
+
+/* ==========================================================================
+   APP MENU POPOVER
+   ========================================================================== */
+.adw-menu-popover {
+    position: absolute;
+    top: 48px;
+    right: 12px;
+    width: 220px;
+    background: var(--popover-bg-color);
+    border: 1px solid var(--popover-border);
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    padding: 6px;
+    z-index: 50;
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.adw-menu-popover.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT (SMARTPHONE & NARROW SCREENS - ADW VIEW SWITCHER BAR)
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* Compact Top Header Bar */
+    .adw-header-bar {
+        height: 46px;
+        min-height: 46px;
+        justify-content: flex-end;
+        padding: 0 12px;
+    }
+
+
+
+    .headerbar-right {
+        position: static;
+        margin-left: auto;
+    }
+
+    /* AdwViewSwitcherBar: Bottom Mobile Navigation Dock */
+    .adw-view-switcher,
+    html[data-theme="light"] .adw-view-switcher,
+    html[data-theme="dark"] .adw-view-switcher {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: auto;
+        min-height: 56px;
+        background: var(--headerbar-bg-color);
+        border-top: 1px solid var(--headerbar-border);
+        border-radius: 0;
+        padding: 6px 12px max(8px, env(safe-area-inset-bottom, 0px)) 12px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.25);
+        z-index: 100;
+    }
+
+    html[data-theme="light"] .adw-view-switcher {
+        background: var(--headerbar-bg-color);
+        border-top: 1px solid var(--headerbar-border);
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .view-switcher-button {
+        flex: 1;
+        max-width: 84px;
+        height: 44px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
+        padding: 4px 6px;
+        border-radius: 8px;
+        font-size: 0.7rem;
+    }
+
+
+    .adw-view-switcher .tab-label {
+        display: block;
+        font-size: 0.68rem;
+        line-height: 1.1;
+        font-weight: 500;
+    }
+
+    .tab-icon svg {
+        width: 19px;
+        height: 19px;
+    }
+
+    /* Scrollable View Stack Bottom Clearance */
+    .adw-view-stack {
+        padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+    }
+
+    /* Page Content Spacing on Mobile */
+    .view-page {
+        padding: 20px 16px 80px 16px;
+    }
+
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .skills-columns-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .projects-software-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .status-page-title {
+        font-size: 1.6rem;
+    }
+
+    .software-header-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .software-filter-pills {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+    }
+}
+
+/* ==========================================================================
+   SMOOTH THEME TRANSITION (VIEW TRANSITIONS API & FALLBACK)
+   ========================================================================== */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.28s;
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+    transition: background-color 0.28s var(--ease-gnome),
+                color 0.28s var(--ease-gnome),
+                border-color 0.28s var(--ease-gnome),
+                box-shadow 0.28s var(--ease-gnome) !important;
+    transition-delay: 0s !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none !important;
+    }
+
+    html.theme-transitioning,
+    html.theme-transitioning * {
+        transition: none !important;
+    }
+}
+
+/* ==========================================================================
+   LIBADWAITA AUTHENTICATION MODAL DIALOG (AdwMessageDialog Pattern)
+   ========================================================================== */
+.adw-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s var(--ease-gnome);
+}
+
+.adw-modal-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.adw-dialog {
+    background: var(--popover-bg-color);
+    color: var(--popover-fg-color);
+    border: 1px solid var(--popover-border);
+    border-radius: 14px;
+    padding: 16px;
+    width: 100%;
+    max-width: 280px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transform: scale(0.94) translateY(8px);
+    transition: transform 0.22s var(--ease-gnome), opacity 0.22s var(--ease-gnome);
+}
+
+html[data-theme="light"] .adw-dialog {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.16);
+}
+
+.adw-modal-backdrop.open .adw-dialog {
+    transform: scale(1) translateY(0);
+}
+
+.dialog-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.dialog-entry-container {
+    width: 100%;
+}
+
+/* GTK4 GtkEntry / AdwEntry Pattern */
+.adw-dialog-entry {
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+    border-radius: var(--button-radius, 8px);
+    background: var(--entry-bg-color);
+    border: 1px solid var(--entry-border-color);
+    color: var(--window-fg-color);
+    font-family: var(--font-ui);
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-align: center;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+.adw-dialog-entry::placeholder {
+    color: var(--dim-label-color);
+    opacity: 0.75;
+    font-family: var(--font-ui);
+    font-weight: 500;
+    letter-spacing: normal;
+}
+
+.adw-dialog-entry:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-color);
+}
+
+.dialog-status-message {
+    display: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.dialog-status-message:not(:empty) {
+    display: block;
+}
+
+.dialog-status-message.error {
+    color: var(--destructive-color);
+}
+
+.dialog-status-message.success {
+    color: var(--success-color);
+}
+
+.dialog-actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.dialog-actions .adw-btn {
+    flex: 1;
+    height: 36px;
+    padding: 0 14px;
+    border-radius: var(--button-radius, 8px);
+    background: var(--button-bg-color);
+    color: var(--window-fg-color);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.dialog-actions .adw-btn:hover {
+    background: var(--button-hover-bg);
+}
+
+.dialog-actions .adw-btn.adw-suggested-action {
+    background: var(--accent-color);
+    color: #ffffff;
+}
+
+.dialog-actions .adw-btn.adw-destructive-action {
+    background: var(--destructive-color, #c01c28);
+    color: #ffffff;
+}
+
+.dialog-actions .adw-btn.adw-destructive-action:hover {
+    filter: brightness(1.1);
+}
+
+/* Add Project Modal Styling */
+.add-project-dialog {
+    max-width: 480px;
+    text-align: left;
+    padding: 22px;
+    border-radius: 14px;
+}
+
+.add-project-dialog .dialog-header {
+    margin-bottom: 16px;
+    text-align: left;
+    width: 100%;
+}
+
+.add-project-dialog .dialog-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    color: var(--window-fg-color);
+}
+
+.add-project-dialog .dialog-subtitle {
+    font-size: 0.82rem;
+    color: var(--dim-label-color);
+    margin: 0;
+}
+
+.project-edit-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 12px;
+    width: 100%;
+    text-align: left;
+}
+
+.form-field-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.form-field-row .flex-1 {
+    flex: 1;
+}
+
+.form-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--dim-label-color);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 60px;
+    font-family: var(--font-ui);
+    padding: 8px 12px;
+    border-radius: var(--button-radius, 8px);
+}
+
+.adw-select {
+    cursor: pointer;
+    padding-right: 28px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+@keyframes adwDialogShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
+}
+
+.adw-dialog.shake {
+    animation: adwDialogShake 0.35s ease-in-out;
+}
+
+/* GitHub Token Dialog & Toast Styling */
+.token-status-box {
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: var(--button-bg-color);
+    border: 1px solid var(--entry-border-color);
+    font-size: 0.82rem;
+    font-weight: 500;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.token-status-box.configured {
+    background: rgba(38, 162, 105, 0.14);
+    border-color: rgba(38, 162, 105, 0.4);
+    color: var(--success-color);
+}
+
+.token-hint-card {
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--popover-border);
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: var(--dim-label-color);
+    margin-bottom: 16px;
+}
+
+html[data-theme="light"] .token-hint-card {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.token-hint-title {
+    font-weight: 600;
+    color: var(--window-fg-color);
+    margin-bottom: 4px;
+}
+
+.btn-text-link:hover {
+    color: var(--window-fg-color) !important;
+}
+
+.adw-toast-overlay {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+    align-items: center;
+}
+
+.adw-toast {
+    background: rgba(36, 36, 36, 0.95);
+    backdrop-filter: blur(12px);
+    color: #ffffff;
+    padding: 10px 22px;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    animation: adwToastSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: auto;
+    max-width: 90vw;
+    text-align: center;
+}
+
+html[data-theme="light"] .adw-toast {
+    background: rgba(45, 45, 45, 0.92);
+    color: #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes adwToastSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.adw-toast.hiding {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+}

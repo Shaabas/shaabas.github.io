@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Shabas T P — Full-Stack Web Developer & UI Craftsman | GTK4 Portfolio</title>
+    <meta name="description" content="Portfolio of Shabas T P, a passionate Full-Stack Web Developer & UI Craftsman crafted with authentic GTK4 and Libadwaita design language.">
+    <meta name="keywords" content="Shabas T P, Web Developer, Full-Stack, GTK4, Libadwaita, GNOME, Frontend, JavaScript, React, UI Craftsman, Portfolio">
+    <meta name="author" content="Shabas T P">
+    
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Shabas T P — Full-Stack Web Developer & UI Craftsman | GTK4 Portfolio">
+    <meta property="og:description" content="An authentic GTK4 / Libadwaita web experience showcasing software projects, skills, and contact dispatch.">
+    <meta property="og:image" content="picture.jpeg">
+    
+    <!-- Google Fonts: Inter for clean Libadwaita UI, JetBrains Mono for Console -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    
+    <!-- Favicon: GTK/GNOME stylized SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233584e4'/><path d='M10 9a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v2h-3V9h-6v14h6v-2h3v2a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V9z' fill='white'/></svg>">
+    <!-- Pre-render theme resolver to avoid flash of incorrect theme -->
+    <script>
+        (function() {
+            var mode = localStorage.getItem('gtk-theme-mode') || localStorage.getItem('gtk-theme') || 'system';
+            var theme = mode;
+            if (mode === 'system') {
+                theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="gnome-desktop">
+
+
+
+
+
+    <!-- MAIN DESKTOP WORKSPACE -->
+    <main class="desktop-workspace" id="desktop-workspace">
+
+        <!-- MAIN APPLICATION WINDOW (AdwApplicationWindow) -->
+        <article class="adw-window" id="main-window" role="dialog" aria-labelledby="window-title-heading">
+            
+            <!-- HEADER BAR (AdwHeaderBar) -->
+            <header class="adw-header-bar" id="window-headerbar">
+
+                <!-- VIEW SWITCHER (AdwViewSwitcher) -->
+                <nav class="adw-view-switcher" role="tablist" aria-label="Portfolio Sections">
+                    <button class="view-switcher-button active" role="tab" aria-selected="true" data-tab="overview" id="tab-overview">
+                        <span class="tab-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                        </span>
+                        <span class="tab-label">Overview</span>
+                    </button>
+                    <button class="view-switcher-button" role="tab" aria-selected="false" data-tab="projects" id="tab-projects">
+                        <span class="tab-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
+                            </svg>
+                        </span>
+                        <span class="tab-label">Projects</span>
+                    </button>
+                    <button class="view-switcher-button" role="tab" aria-selected="false" data-tab="skills" id="tab-skills">
+                        <span class="tab-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                            </svg>
+                        </span>
+                        <span class="tab-label">Skills</span>
+                    </button>
+
+                    <button class="view-switcher-button" role="tab" aria-selected="false" data-tab="contact" id="tab-contact">
+                        <span class="tab-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                        </span>
+                        <span class="tab-label">Contact</span>
+                    </button>
+                </nav>
+
+                <!-- HEADER ACTIONS -->
+                <div class="headerbar-right">
+                    <!-- Sound Toggle Button -->
+                    <button class="adw-icon-btn" id="header-sound-btn" aria-label="Toggle Sound Effects" title="Toggle Sound FX">
+                        <span class="btn-icon-svg" id="header-sound-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                            </svg>
+                        </span>
+                    </button>
+
+                    <!-- 3-Way Theme Cycle Button (Follow System -> Light -> Dark) -->
+                    <button class="adw-icon-btn" id="window-theme-toggle" aria-label="Theme: Follow System" title="Theme: System">
+                        <span id="theme-btn-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                <path d="M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </header>
+
+
+            <!-- ADW BANNER: STATUS & NOTICE -->
+            <div class="adw-banner" id="announcement-banner">
+                <span class="banner-icon">🚀</span>
+                <span class="banner-text">Welcome to my GTK4 Web Portfolio! Crafted with pure HTML, CSS &amp; vanilla JS. Available for opportunities.</span>
+                <button class="banner-close-btn" id="banner-close-btn" aria-label="Dismiss Notice">&times;</button>
+            </div>
+
+            <!-- WINDOW CONTENT CONTAINER (AdwViewStack) -->
+            <div class="adw-view-stack" id="view-stack">
+
+                <!-- ==============================================
+                     TAB 1: OVERVIEW (AdwStatusPage + PreferencesGroups)
+                     ============================================== -->
+                <section class="view-page active" id="page-overview" role="tabpanel" aria-labelledby="tab-overview">
+                    <div class="adw-clamp">
+                        
+                        <!-- HERO / STATUS PAGE -->
+                        <div class="adw-status-page">
+                            <div class="avatar-ring-container">
+                                <img src="picture.jpeg" alt="Shabas T P Profile Avatar" class="adw-avatar" id="hero-avatar" />
+                                <span class="avatar-status-dot" title="Active & Available"></span>
+                            </div>
+                            <h1 class="status-page-title">Shabas T P</h1>
+                            <div class="status-page-badge">Full-Stack Web Developer &bull; UI Craftsman</div>
+                            <p class="status-page-description">
+                                Architecting fluid, resilient, and human-first web applications. Turning complex problems into elegant, accessible user experiences.
+                            </p>
+                            <div class="status-page-actions">
+                                <button class="adw-pill-btn adw-suggested-action" id="hero-contact-btn">
+                                    <span class="btn-icon">✉️</span> Get in Touch
+                                </button>
+                                <button class="adw-pill-btn" id="hero-projects-btn">
+                                    <span class="btn-icon">📦</span> Explore Projects
+                                </button>
+                                <a href="https://github.com/shaabas" target="_blank" rel="noopener noreferrer" class="adw-pill-btn">
+                                    <span class="btn-icon">🐙</span> GitHub
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- PREFERENCES GROUP: ABOUT ME -->
+                        <div class="adw-preferences-group">
+                            <div class="group-header">
+                                <h2 class="group-title">About Me</h2>
+                                <span class="group-description">Background, philosophy, and professional focus</span>
+                            </div>
+                            <div class="adw-card-group">
+                                <div class="adw-action-row">
+                                    <div class="row-icon-box accent-bg">💡</div>
+                                    <div class="row-text">
+                                        <div class="row-title">Development Philosophy</div>
+                                        <div class="row-subtitle">Code is a craft. I balance pixel-level aesthetic polish with solid architectural reliability and zero unnecessary overhead.</div>
+                                    </div>
+                                </div>
+                                <div class="adw-action-row">
+                                    <div class="row-icon-box purple-bg">💻</div>
+                                    <div class="row-text">
+                                        <div class="row-title">Engineering Expertise</div>
+                                        <div class="row-subtitle">Full-stack web systems, modern JavaScript (ES6+), React component ecosystems, semantic HTML5, and responsive CSS styling.</div>
+                                    </div>
+                                </div>
+                                <div class="adw-action-row">
+                                    <div class="row-icon-box green-bg">📍</div>
+                                    <div class="row-text">
+                                        <div class="row-title">Location &amp; Collaboration</div>
+                                        <div class="row-subtitle">Based in Kerala, India (UTC +05:30). Fully equipped for remote collaboration across global teams and timezones.</div>
+                                    </div>
+                                    <span class="adw-badge success-badge">Available Now</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PREFERENCES GROUP: METRICS & HIGHLIGHTS -->
+                        <div class="adw-preferences-group">
+                            <div class="group-header">
+                                <h2 class="group-title">Key Metrics</h2>
+                                <span class="group-description">Track record and engineering principles</span>
+                            </div>
+                            <div class="metrics-grid">
+                                <div class="metric-card">
+                                    <div class="metric-number" id="metric-exp">3+</div>
+                                    <div class="metric-label">Years Crafting Web Experiences</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-number">100%</div>
+                                    <div class="metric-label">Dedication to Clean UI &amp; Code</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-number">0ms</div>
+                                    <div class="metric-label">Bloat, Pure Vanilla Performance</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-number">24/7</div>
+                                    <div class="metric-label">Curiosity &amp; Open Source Passion</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PREFERENCES GROUP: QUICK SYSTEM SUMMARY -->
+                        <div class="adw-preferences-group">
+                            <div class="group-header">
+                                <h2 class="group-title">Explore Portfolio</h2>
+                                <span class="group-description">Navigate software releases, skills lab, and communication channels</span>
+                            </div>
+                            <div class="adw-card-group">
+                                <div class="adw-action-row clickable-row" id="row-launch-software">
+                                    <div class="row-icon-box orange-bg">📦</div>
+                                    <div class="row-text">
+                                        <div class="row-title">GNOME Software Center</div>
+                                        <div class="row-subtitle">Browse apps, live demos, repository links, and interactive project cards.</div>
+                                    </div>
+                                    <span class="row-action-arrow">›</span>
+                                </div>
+                                <div class="adw-action-row clickable-row" id="row-launch-skills">
+                                    <div class="row-icon-box blue-bg">⚙️</div>
+                                    <div class="row-text">
+                                        <div class="row-title">System Monitor &amp; Skills Lab</div>
+                                        <div class="row-subtitle">Inspect technical proficiencies, live browser engine benchmarks, and resource gauges.</div>
+                                    </div>
+                                    <span class="row-action-arrow">›</span>
+                                </div>
+                                <div class="adw-action-row clickable-row" id="row-launch-contact">
+                                    <div class="row-icon-box green-bg">✉️</div>
+                                    <div class="row-text">
+                                        <div class="row-title">Direct Communication &amp; Dispatch</div>
+                                        <div class="row-subtitle">Send electronic messages or reach out across GitHub and professional networks.</div>
+                                    </div>
+                                    <span class="row-action-arrow">›</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- ==============================================
+                     TAB 2: PROJECTS (GNOME Software Style)
+                     ============================================== -->
+                <section class="view-page" id="page-projects" role="tabpanel" aria-labelledby="tab-projects">
+                    <div class="adw-clamp">
+                        
+                        <!-- Projects Filter & Search Bar -->
+                        <div class="software-header-bar">
+                            <div class="software-filter-pills" id="project-filters">
+                                <button class="filter-pill active" data-filter="all">All Software</button>
+                                <button class="filter-pill" data-filter="web">Web Apps</button>
+                                <button class="filter-pill" data-filter="frontend">Frontend &amp; UI</button>
+                                <button class="filter-pill" data-filter="interactive">Interactive</button>
+                            </div>
+                            <div class="software-search-area">
+                                <div class="software-search">
+                                    <input type="text" class="adw-entry" id="project-search-input" placeholder="Search projects...">
+                                </div>
+                                <button type="button" class="adw-btn adw-suggested-action add-project-btn" id="add-project-btn" style="display: none;">
+                                    + Add Project
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Projects Grid -->
+                        <div class="projects-software-grid" id="projects-container"></div>
+                    </div>
+                </section>
+
+                <!-- ==============================================
+                     TAB 3: SKILLS (GNOME System Monitor / Preferences)
+                     ============================================== -->
+                <section class="view-page" id="page-skills" role="tabpanel" aria-labelledby="tab-skills">
+                    <div class="adw-clamp">
+                        
+                        <!-- System Monitor Overview -->
+                        <div class="adw-preferences-group">
+                            <div class="group-header">
+                                <h2 class="group-title">System Resources &amp; Proficiencies</h2>
+                                <span class="group-description">Real-time breakdown of core competencies and engineering tools</span>
+                            </div>
+                            
+                            <div class="system-resources-box">
+                                <div class="resource-row">
+                                    <div class="res-info">
+                                        <span class="res-name">Frontend Architecture (JavaScript, React, HTML5, CSS3)</span>
+                                        <span class="res-val" id="val-frontend">96%</span>
+                                    </div>
+                                    <div class="adw-progress-bar"><div class="progress-fill" style="width: 96%;"></div></div>
+                                </div>
+                                <div class="resource-row">
+                                    <div class="res-info">
+                                        <span class="res-name">UI / UX &amp; Design Systems (GTK, Responsive, Accessibility)</span>
+                                        <span class="res-val" id="val-ui">94%</span>
+                                    </div>
+                                    <div class="adw-progress-bar"><div class="progress-fill" style="width: 94%;"></div></div>
+                                </div>
+                                <div class="resource-row">
+                                    <div class="res-info">
+                                        <span class="res-name">Backend &amp; APIs (Node.js, Express, REST, Databases)</span>
+                                        <span class="res-val" id="val-backend">88%</span>
+                                    </div>
+                                    <div class="adw-progress-bar"><div class="progress-fill" style="width: 88%;"></div></div>
+                                </div>
+                                <div class="resource-row">
+                                    <div class="res-info">
+                                        <span class="res-name">DevOps, Git &amp; Tooling (Linux, CI/CD, Vite, GitHub Pages)</span>
+                                        <span class="res-val" id="val-git">92%</span>
+                                    </div>
+                                    <div class="adw-progress-bar"><div class="progress-fill" style="width: 92%;"></div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Categorized Skills Groups -->
+                        <div class="skills-columns-grid">
+                            
+                            <!-- Group 1: Core Languages -->
+                            <div class="adw-preferences-group">
+                                <div class="group-header">
+                                    <h3 class="group-title">Languages &amp; Core</h3>
+                                </div>
+                                <div class="adw-card-group">
+                                    <div class="adw-action-row">
+                                        <span class="skill-glyph-icon">⚡</span>
+                                        <div class="row-text">
+                                            <div class="row-title">JavaScript (ES6+)</div>
+                                            <div class="row-subtitle">Async/Await, Closures, DOM, Web APIs, Event Loop</div>
+                                        </div>
+                                        <span class="adw-badge">Advanced</span>
+                                    </div>
+                                    <div class="adw-action-row">
+                                        <span class="skill-glyph-icon">🎨</span>
+                                        <div class="row-text">
+                                            <div class="row-title">CSS3 &amp; Modern Layouts</div>
+                                            <div class="row-subtitle">CSS Grid, Flexbox, Custom Properties, Animations</div>
+                                        </div>
+                                        <span class="adw-badge">Expert</span>
+                                    </div>
+                                    <div class="adw-action-row">
+                                        <span class="skill-glyph-icon">🏗️</span>
+                                        <div class="row-text">
+                                            <div class="row-title">HTML5 Semantic</div>
+                                            <div class="row-subtitle">Semantic hierarchy, accessibility, SEO, meta tags</div>
+                                        </div>
+                                        <span class="adw-badge">Expert</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Group 2: Frameworks & Ecosystem -->
+                            <div class="adw-preferences-group">
+                                <div class="group-header">
+                                    <h3 class="group-title">Frameworks &amp; Tooling</h3>
+                                </div>
+                                <div class="adw-card-group">
+                                    <div class="adw-action-row">
+                                        <span class="skill-glyph-icon">⚛️</span>
+                                        <div class="row-text">
+                                            <div class="row-title">React.js</div>
+                                            <div class="row-subtitle">Functional components, hooks, state lifecycle</div>
+                                        </div>
+                                        <span class="adw-badge">Proficient</span>
+                                    </div>
+                                    <div class="adw-action-row">
+                                        <span class="skill-glyph-icon">🌿</span>
+                                        <div class="row-text">
+                                            <div class="row-title">Git &amp; Version Control</div>
+                                            <div class="row-subtitle">Branching, rebasing, pull requests, actions</div>
+                                        </div>
+                                        <span class="adw-badge">Advanced</span>
+                                    </div>
+                                    <div class="adw-action-row">
+                                        <span class="skill-glyph-icon">🐧</span>
+                                        <div class="row-text">
+                                            <div class="row-title">Linux &amp; Shell Scripting</div>
+                                            <div class="row-subtitle">Bash, command-line workflows, GNOME desktop ecosystem</div>
+                                        </div>
+                                        <span class="adw-badge">Native</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- LIVE BENCHMARK WIDGET -->
+                        <div class="adw-preferences-group">
+                            <div class="group-header">
+                                <h3 class="group-title">Live Engine Diagnostics</h3>
+                                <span class="group-description">Test your browser's JS and rendering performance</span>
+                            </div>
+                            <div class="adw-card-group benchmark-card">
+                                <div class="benchmark-info">
+                                    <div class="benchmark-title">Client Runtime Benchmark</div>
+                                    <div class="benchmark-sub" id="benchmark-status-text">Click "Run Diagnostic" to test DOM ops, math calculations, and render latency.</div>
+                                </div>
+                                <div class="benchmark-results" id="benchmark-results" style="display: none;">
+                                    <span class="bench-stat" id="bench-ops">Operations: <strong>1,000,000</strong></span>
+                                    <span class="bench-stat" id="bench-time">Time: <strong>4.2 ms</strong></span>
+                                    <span class="bench-stat" id="bench-score">Score: <strong class="accent-text">99.8 / 100</strong></span>
+                                </div>
+                                <button class="adw-btn adw-suggested-action" id="run-benchmark-btn">
+                                    ▶ Run Diagnostic
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- ==============================================
+                     TAB 4: CONTACT (GNOME Geary / Mail Compose Style)
+                     ============================================== -->
+                <section class="view-page" id="page-contact" role="tabpanel" aria-labelledby="tab-contact">
+                    <div class="adw-clamp">
+                        
+                        <div class="adw-status-page mini-status">
+                            <div class="contact-mail-icon">✉️</div>
+                            <h2 class="status-page-title">Dispatch a Message</h2>
+                            <p class="status-page-description">
+                                Whether you're hiring for a full-stack engineering role, exploring collaboration, or just saying hi — let's connect.
+                            </p>
+                        </div>
+
+                        <!-- Contact Channels List -->
+                        <div class="adw-preferences-group">
+                            <div class="group-header">
+                                <h3 class="group-title">Direct Communication Channels</h3>
+                            </div>
+                            <div class="adw-card-group">
+                                <div class="adw-action-row clickable-row" id="row-copy-email">
+                                    <div class="row-icon-box blue-bg">📧</div>
+                                    <div class="row-text">
+                                        <div class="row-title">Electronic Mail</div>
+                                        <div class="row-subtitle">iamshabastp@gmail.com</div>
+                                    </div>
+                                    <button class="adw-btn mini-btn" id="btn-copy-email" title="Copy email address">
+                                        Copy
+                                    </button>
+                                </div>
+                                <a href="https://github.com/shaabas" target="_blank" rel="noopener noreferrer" class="adw-action-row clickable-row">
+                                    <div class="row-icon-box dark-bg">🐙</div>
+                                    <div class="row-text">
+                                        <div class="row-title">GitHub Profile</div>
+                                        <div class="row-subtitle">github.com/shaabas &bull; Open source projects &amp; contributions</div>
+                                    </div>
+                                    <span class="row-action-arrow">↗</span>
+                                </a>
+                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="adw-action-row clickable-row">
+                                    <div class="row-icon-box blue-bg">💼</div>
+                                    <div class="row-text">
+                                        <div class="row-title">LinkedIn Profile</div>
+                                        <div class="row-subtitle">Professional network &amp; career background</div>
+                                    </div>
+                                    <span class="row-action-arrow">↗</span>
+                                </a>
+                                <div class="adw-action-row">
+                                    <div class="row-icon-box green-bg">📍</div>
+                                    <div class="row-text">
+                                        <div class="row-title">Geographic Hub</div>
+                                        <div class="row-subtitle">Kerala, India &bull; Standard Time (IST, UTC+05:30)</div>
+                                    </div>
+                                    <span class="adw-badge">Remote Ready</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Compose Form (AdwEntryRow style) -->
+                        <div class="adw-preferences-group">
+                            <div class="group-header">
+                                <h3 class="group-title">Compose Direct Dispatch</h3>
+                                <span class="group-description">Sends message directly to Shabas</span>
+                            </div>
+                            <form class="adw-card-group compose-form" id="contact-form">
+                                <div class="adw-entry-row">
+                                    <label for="contact-name" class="entry-label">Sender Name</label>
+                                    <input type="text" id="contact-name" class="entry-input" placeholder="Your Name or Organization" required>
+                                </div>
+                                <div class="adw-entry-row">
+                                    <label for="contact-email" class="entry-label">Sender Email</label>
+                                    <input type="email" id="contact-email" class="entry-input" placeholder="your.email@example.com" required>
+                                </div>
+                                <div class="adw-entry-row">
+                                    <label for="contact-subject" class="entry-label">Subject</label>
+                                    <input type="text" id="contact-subject" class="entry-input" placeholder="Project Inquiry / Job Opportunity / Greeting" required>
+                                </div>
+                                <div class="adw-entry-row textarea-row">
+                                    <label for="contact-message" class="entry-label">Message</label>
+                                    <textarea id="contact-message" class="entry-input entry-textarea" rows="4" placeholder="Write your message here..." required></textarea>
+                                </div>
+                                <div class="form-actions-row">
+                                    <button type="submit" class="adw-btn adw-suggested-action" id="submit-contact-btn">
+                                        <span class="btn-icon">🚀</span> Dispatch Message
+                                    </button>
+                                    <button type="reset" class="adw-flat-btn" id="reset-contact-btn">
+                                        Discard
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+
+        </article>
+
+    </main>
+
+    <!-- AUTHENTICATION & DEAUTHENTICATION DIALOG -->
+    <div class="adw-modal-backdrop" id="auth-modal-backdrop" aria-hidden="true">
+        <div class="adw-dialog" role="dialog" aria-label="Secret Authentication" aria-modal="true">
+            <!-- AUTHENTICATE VIEW (when not authenticated) -->
+            <form id="auth-form" class="dialog-form" autocomplete="off">
+                <div class="dialog-entry-container">
+                    <input type="password" id="auth-phrase-input" class="adw-dialog-entry" placeholder="Enter the password" autocomplete="off" spellcheck="false" required />
+                </div>
+                <div class="dialog-status-message" id="auth-status-msg" aria-live="polite"></div>
+                
+                <div class="dialog-actions">
+                    <button type="button" class="adw-btn" id="auth-cancel-btn">Cancel</button>
+                    <button type="submit" class="adw-btn adw-suggested-action" id="auth-submit-btn">Authenticate</button>
+                </div>
+            </form>
+
+            <!-- DEAUTHENTICATE VIEW (when in authenticated session) -->
+            <div id="deauth-view" class="dialog-form" style="display: none;">
+                <div class="dialog-status-message" style="display: block; margin: 0 0 12px 0; color: var(--window-fg-color); font-weight: 600;">
+                    Authenticated session is active.
+                </div>
+                <div class="dialog-actions">
+                    <button type="button" class="adw-btn" id="deauth-cancel-btn">Cancel</button>
+                    <button type="button" class="adw-btn adw-destructive-action" id="deauth-confirm-btn">Deauthenticate</button>
+                </div>
+                <div style="margin-top: 12px; text-align: center;">
+                    <button type="button" class="btn-text-link" id="session-clear-token-btn" style="font-size: 0.78rem; color: var(--dim-label-color); background: none; border: none; cursor: pointer; text-decoration: underline; padding: 4px;">
+                        Clear saved GitHub Token
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD PROJECT MODAL DIALOG -->
+    <div class="adw-modal-backdrop" id="add-project-modal-backdrop" aria-hidden="true">
+        <div class="adw-dialog add-project-dialog" role="dialog" aria-label="Add New Project" aria-modal="true">
+            <div class="dialog-header">
+                <h2 class="dialog-title" id="project-modal-title">Add New Project</h2>
+                <p class="dialog-subtitle" id="project-modal-subtitle">Configure software details to add to your portfolio</p>
+            </div>
+            <form id="add-project-form" class="dialog-form project-edit-form" autocomplete="off">
+                <input type="hidden" id="edit-project-id" value="" />
+                <div class="form-field-group">
+                    <label for="new-project-title" class="form-label">Project Title *</label>
+                    <input type="text" id="new-project-title" class="adw-entry" placeholder="e.g. Real-Time Raytracer" required />
+                </div>
+                <div class="form-field-row">
+                    <div class="form-field-group flex-1">
+                        <label for="new-project-dev" class="form-label">Developer / Version</label>
+                        <input type="text" id="new-project-dev" class="adw-entry" placeholder="by Shabas T P • v1.0" />
+                    </div>
+                    <div class="form-field-group flex-1">
+                        <label for="new-project-category" class="form-label">Category</label>
+                        <select id="new-project-category" class="adw-entry adw-select">
+                            <option value="web">Web Apps</option>
+                            <option value="frontend">Frontend &amp; UI</option>
+                            <option value="interactive">Interactive</option>
+                            <option value="web frontend">Web &amp; Frontend</option>
+                            <option value="web interactive">Web &amp; Interactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-field-group">
+                    <label for="new-project-desc" class="form-label">Description *</label>
+                    <textarea id="new-project-desc" class="adw-entry form-textarea" rows="3" placeholder="Brief explanation of the project features, design, and architecture..." required></textarea>
+                </div>
+                <div class="form-field-group">
+                    <label for="new-project-tags" class="form-label">Tech Stack Tags (Comma separated)</label>
+                    <input type="text" id="new-project-tags" class="adw-entry" placeholder="e.g. React, WebSockets, Tailwind, Node.js" />
+                </div>
+                <div class="form-field-row">
+                    <div class="form-field-group flex-1">
+                        <label for="new-project-url" class="form-label">Action Link URL *</label>
+                        <input type="url" id="new-project-url" class="adw-entry" placeholder="https://github.com/..." required />
+                    </div>
+                    <div class="form-field-group flex-1">
+                        <label for="new-project-btn-text" class="form-label">Action Button Label</label>
+                        <input type="text" id="new-project-btn-text" class="adw-entry" placeholder="Source Code" value="Source Code" />
+                    </div>
+                </div>
+                <div class="form-field-row">
+                    <div class="form-field-group flex-1">
+                        <label for="new-project-gradient" class="form-label">Icon Color</label>
+                        <select id="new-project-gradient" class="adw-entry adw-select">
+                            <option value="app-blue-gradient">Blue Gradient</option>
+                            <option value="app-purple-gradient">Purple Gradient</option>
+                            <option value="app-green-gradient">Green Gradient</option>
+                            <option value="app-gold-gradient">Gold Gradient</option>
+                            <option value="app-cyan-gradient">Cyan Gradient</option>
+                            <option value="app-parchment-gradient">Parchment Gradient</option>
+                        </select>
+                    </div>
+                    <div class="form-field-group" style="max-width: 90px;">
+                        <label for="new-project-emoji" class="form-label">Icon Emoji</label>
+                        <input type="text" id="new-project-emoji" class="adw-entry text-center" maxlength="2" value="🚀" />
+                    </div>
+                </div>
+
+                <div class="dialog-actions modal-footer">
+                    <button type="button" class="adw-btn" id="add-project-cancel-btn">Cancel</button>
+                    <button type="submit" class="adw-btn adw-suggested-action" id="add-project-submit-btn">Add Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DELETE PROJECT CONFIRMATION DIALOG -->
+    <div class="adw-modal-backdrop" id="delete-project-modal-backdrop" aria-hidden="true">
+        <div class="adw-dialog" role="dialog" aria-label="Delete Project" aria-modal="true" style="max-width: 340px; padding: 20px;">
+            <div class="dialog-header" style="text-align: center; margin-bottom: 12px;">
+                <h3 class="dialog-title" style="font-size: 1.1rem; margin-bottom: 6px;">Delete Project?</h3>
+                <p class="dialog-subtitle" id="delete-project-msg" style="font-size: 0.85rem; line-height: 1.4; color: var(--dim-label-color);">
+                    Are you sure you want to remove this project from your portfolio?
+                </p>
+            </div>
+            <div class="dialog-actions">
+                <button type="button" class="adw-btn" id="delete-cancel-btn">Cancel</button>
+                <button type="button" class="adw-btn adw-destructive-action" id="delete-confirm-btn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GITHUB ACCESS TOKEN DIALOG -->
+    <div class="adw-modal-backdrop" id="token-modal-backdrop" aria-hidden="true">
+        <div class="adw-dialog add-project-dialog" role="dialog" aria-label="GitHub Access Token" aria-modal="true">
+            <div class="dialog-header">
+                <h2 class="dialog-title">GitHub Access Token</h2>
+                <p class="dialog-subtitle">Configure your Personal Access Token for automated GitHub Pages updates</p>
+            </div>
+            <form id="token-form" class="dialog-form project-edit-form" autocomplete="off">
+                <div class="token-status-box" id="token-status-box">
+                    <span id="token-status-text">No token configured. Edits are saved in this browser only.</span>
+                </div>
+                <div class="form-field-group">
+                    <label for="github-token-input" class="form-label">Personal Access Token (Fine-grained or classic)</label>
+                    <input type="password" id="github-token-input" class="adw-entry" placeholder="ghp_... or github_pat_..." autocomplete="off" spellcheck="false" />
+                </div>
+                <div class="token-hint-card">
+                    <div class="token-hint-title">🔒 How Security Works</div>
+                    <div class="token-hint-text">
+                        Your token is stored <strong>strictly in this browser's private localStorage</strong>. It is never committed to Git and never visible to visitors.
+                    </div>
+                    <div class="token-hint-text" style="margin-top: 6px;">
+                        <strong>Required Scope:</strong> <code>Contents: Read and write</code> on repository <code>Shaabas/shaabas.github.io</code>.
+                    </div>
+                </div>
+                <div class="dialog-actions modal-footer">
+                    <button type="button" class="adw-btn" id="token-cancel-btn">Cancel</button>
+                    <button type="button" class="adw-btn adw-destructive-action" id="token-clear-btn" style="display: none;">Clear Token</button>
+                    <button type="submit" class="adw-btn adw-suggested-action" id="token-save-btn">Save Token</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATIONS OVERLAY -->
+    <div class="adw-toast-overlay" id="adw-toast-overlay" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
