@@ -716,8 +716,14 @@
 
         renderProjects(currentProjects);
 
-        // Fetch latest projects.json asynchronously
-        fetch('projects.json')
+        // Fetch latest projects.json asynchronously with cache-busting to bypass browser/CDN 10-minute cache
+        fetch(`projects.json?_t=${Date.now()}`, {
+            cache: 'no-store',
+            headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache'
+            }
+        })
             .then(res => res.ok ? res.json() : null)
             .then(data => {
                 if (Array.isArray(data)) {
